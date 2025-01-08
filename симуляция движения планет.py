@@ -1,12 +1,16 @@
+# Импортирование нужных библиотек:
 import pygame
 import math
 
 pygame.init()
 
+# Создание окна:
 WIDTH, HEIGHT = 800, 650
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Симуляция движения планет")
 
+
+# даю нужным мне цветам обозначение, чтобы было проще работать в будущем:
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
@@ -23,11 +27,11 @@ DARK_BLUE = (0, 0, 128)
 
 
 class Planet:
-    # astronomical unit, distance from the Sun to the Earth in meters
+     # астрономическая единица, расстояние от Солнца до Земли в метрах
     AU = 149.6e6 * 1000
     G = 6.67428e-11
-    SCALE = 80 / AU  # 1 AU = 100 pixels
-    TIMESTEP = 3600 * 24  # 1 day (3600 seconds = 1 hour)
+    SCALE = 80 / AU  # 1 AU = 100 pixels  # 1 AU = 100 пиксель
+    TIMESTEP = 3600 * 24  # 1 day (3600 seconds = 1 hour) # 1 день (3600 секунд = 1 час)
 
     def __init__(self, x, y, radius, color, mass):
         self.x = x
@@ -98,12 +102,11 @@ class Planet:
 
 
 
-
 def main():
     run = True
     clock = pygame.time.Clock()
 
-
+#Создание спрайтов для будущих в анимации планет и их характеристики (цвет, размер и т.п.):
     sun = Planet(0, 0, 15, YELLOW, 1.98892 * 10 ** 30)
     sun.sun = True
     # further it's easy to add more planets
@@ -111,14 +114,14 @@ def main():
     venus = Planet(0.9 * Planet.AU, 0, 7, WHITE, 4.8685 * 10 ** 24)
     earth = Planet(1.2 * Planet.AU, 0, 8, BLUE, 5.9742 * 10 ** 24)
     mars = Planet(0.624 * Planet.AU, 0, 6, RED, 6.39 * 10 ** 23)
-
+    
     upiter = Planet(1.5 * Planet.AU, 0, 10, ORANGE, 6.39 * 10 ** 23)
     saturn = Planet(1.9 * Planet.AU, 0, 10, WHITE_YELLOW, 6.39 * 10 ** 23)
     uran = Planet(2.2 * Planet.AU, 0, 8, GRAY_BLUE, 6.39 * 10 ** 23)
     neptun = Planet(2.6 * Planet.AU, 0, 8, DARK_BLUE, 6.39 * 10 ** 23)
 
 
-
+  # Настраиваю начальную точку планет:
     mercury.y_velocity = 47.4 * 1000
     venus.y_velocity = 31.02 * 1000
     earth.y_velocity = 26.783 * 1000
@@ -128,9 +131,12 @@ def main():
     uran.y_velocity = 20.05 * 1000
     neptun.y_velocity = 18.4 * 1000
 
-
+    
+ # Пихаю в список чтобы проще было работать в будущем:
     planets = [sun, mercury, venus, earth, mars, upiter, saturn, uran, neptun]
 
+    
+# Создаём цикл анимации:
     while run:
         clock.tick(60)
         WIN.fill(BLACK)
